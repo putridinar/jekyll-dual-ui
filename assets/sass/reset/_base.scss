@@ -25,6 +25,8 @@ main {
     position: fixed;
     left: 70px;
     width: -webkit-fill-available;
+    background: var(--costum-dark-bg);
+    color: var(--costum-dark-text);
   }
 }
 

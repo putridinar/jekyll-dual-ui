@@ -4,3 +4,7 @@ html {
 *, ::before, ::after {
   box-sizing: inherit;
 } 
+:root {
+  --costum-dark-bg: #151b26;
+  --costum-dark-text: #dee2e6;
+}
