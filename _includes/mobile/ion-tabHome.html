@@ -7,35 +7,56 @@
           <ion-title>Home</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding">
+        <ion-content class="ion-padding">
 
-        <!-- Spinner tampil saat fetch berjalan -->
-        <div id="spinner-container">
-          <ion-spinner class="center-content" name="crescent"></ion-spinner>
-        </div>
+          <!-- Spinner tampil saat fetch berjalan -->
+          <div id="spinner-container" class="text-center my-4">
+            <ion-spinner class="center-content" name="crescent"></ion-spinner>
+          </div>
 
-        <!-- Card akan dimuat ke sini -->
-        <div id="home-container" style="display: none;"></div>
+          <!-- Card akan dimuat ke sini -->
+          <div id="home-container" style="display: none;"></div>
 
-      </ion-content>
+        </ion-content>
     </div>
   </ion-tab>
 
-  <script>
-    // Ambil card.html dan tampilkan
-    fetch('/mobile/fetch/homeContent.html')
-      .then(function(response) {
-        return response.text();
-      })
-      .then(function(html) {
-        // Sembunyikan spinner, tampilkan konten
-        document.getElementById('spinner-container').style.display = 'none';
-        const ionContainer = document.getElementById('home-container');
-        ionContainer.innerHTML = html;
-        ionContainer.style.display = 'block';
-      })
-      .catch(function(error) {
-        console.error('Gagal memuat konten:', error);
-        document.getElementById('spinner-container').innerHTML = '<p class="center-content">Gagal memuat data.</p>';
-      });
-  </script>
+<script>
+fetch('/assets/json/posts.json')
+  .then(res => res.json())
+  .then(data => {
+    renderIonCards(data.posts);
+    // Sembunyikan spinner & tampilkan container setelah render
+    document.getElementById('spinner-container').style.display = 'none';
+    document.getElementById('home-container').style.display = 'block';
+  })
+  .catch(err => {
+    console.error('Gagal fetch data:', err);
+    document.getElementById('spinner-container').innerHTML = '<p>Gagal memuat data.</p>';
+  });
+
+function renderIonCards(posts) {
+  const container = document.getElementById('home-container');
+  container.innerHTML = ''; // Bersihkan dulu
+
+  posts.forEach(post => {
+    const card = document.createElement('ion-card');
+
+    card.innerHTML = `
+      <img alt="${post.title}" src="${post.img}" />
+      <ion-card-header>
+        <ion-card-title>${post.title}</ion-card-title>
+        <ion-card-subtitle>${post.date}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        ${post.description}
+        <div class="mt-2">
+          <a href="${post.url}" class="text-primary">Baca Selengkapnya</a>
+        </div>
+      </ion-card-content>
+    `;
+
+    container.appendChild(card);
+  });
+}
+</script>

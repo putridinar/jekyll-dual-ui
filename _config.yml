@@ -10,6 +10,8 @@ url: "http://localhost:8800"
 # Markdown settings
 markdown: kramdown
 
+permalink: :title
+
 # Sass settings
 sass:
   sass_dir: assets/sass

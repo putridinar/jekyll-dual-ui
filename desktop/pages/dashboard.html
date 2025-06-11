@@ -3,3 +3,40 @@ layout: desktop
 title: Dashboard
 permalink: /dashboard
 ---
+
+<div class="container py-4">
+  <div class="row g-4" id="post-container">
+    <!-- Cards akan di-render di sini -->
+  </div>
+</div>
+
+<script>
+fetch('/assets/json/posts.json')
+  .then(res => res.json())
+  .then(data => renderPosts(data.posts));
+
+function renderPosts(posts) {
+  const container = document.getElementById('post-container');
+
+  posts.forEach(post => {
+    const col = document.createElement('div');
+    col.className = 'col-12 col-sm-6 col-lg-3';
+
+    col.innerHTML = `
+      <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="${post.img}" class="card-img-top object-fit-cover" alt="${post.title}" style="height: 180px; object-fit: cover;">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-dark">${post.title}</h5>
+          <p class="card-text text-secondary small flex-grow-1">${post.description}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <a href="${post.url}" class="btn btn-sm btn-primary rounded-pill">Baca Selengkapnya</a>
+            <span class="text-muted small">${post.date}</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(col);
+  });
+}
+</script>
