@@ -6,11 +6,11 @@ layout: default
 
   const isMobile = window.innerWidth <= 768;
 
-  if (path('/mobile') && !isMobile) {
+  if (path('{{ "/mobile" | relative_url }}') && !isMobile) {
     location.reload(); // atau ganti ke "/desktop/"
   }
 
-  if (path('/desktop') && isMobile) {
+  if (path('{{ "/desktop" | relative_url }}') && isMobile) {
     location.reload(); // atau ganti ke "/mobile/"
   }
 
@@ -18,9 +18,9 @@ layout: default
     localStorage.setItem('uiRedirected', 'true');
 
     if (isMobile) {
-      window.location.href = "/mobile";
+      window.location.href = "{{ '/mobile' | relative_url }}";
     } else {
-      window.location.href = "/desktop";
+      window.location.href = "{{ '/desktop' | relative_url }}";
     }
   }
 </script>
