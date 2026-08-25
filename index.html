@@ -2,25 +2,25 @@
 layout: default
 ---
 <script>
-  const path = window.location.pathname;
+  (function() {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const path = window.location.pathname;
+    const mobilePath = '{{ "/mobile" | relative_url }}';
+    const desktopPath = '{{ "/desktop" | relative_url }}';
 
-  const isMobile = window.innerWidth <= 768;
-
-  if (path('{{ "/mobile" | relative_url }}') && !isMobile) {
-    location.reload(); // atau ganti ke "/desktop/"
-  }
-
-  if (path('{{ "/desktop" | relative_url }}') && isMobile) {
-    location.reload(); // atau ganti ke "/mobile/"
-  }
-
-  if (!localStorage.getItem('uiRedirected')) {
-    localStorage.setItem('uiRedirected', 'true');
-
-    if (isMobile) {
-      window.location.href = "{{ '/mobile' | relative_url }}";
-    } else {
-      window.location.href = "{{ '/desktop' | relative_url }}";
+    if (path.includes(mobilePath) && !isMobile) {
+      window.location.href = desktopPath;
+      return;
     }
-  }
+    if (path.includes(desktopPath) && isMobile) {
+      window.location.href = mobilePath;
+      return;
+    }
+    if (!path.includes(mobilePath) && !path.includes(desktopPath)) {
+      if (!localStorage.getItem('uiRedirected')) {
+        localStorage.setItem('uiRedirected', 'true');
+        window.location.href = isMobile ? mobilePath : desktopPath;
+      }
+    }
+  })();
 </script>

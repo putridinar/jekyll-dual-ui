@@ -1,6 +1,9 @@
 
-  <script>
-    if (window.innerWidth <= 768) {
+<script>
+  (function() {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (isMobile) {
       location.replace("{{ '/mobile' | relative_url }}");
     }
-  </script>
+  })();
+</script>

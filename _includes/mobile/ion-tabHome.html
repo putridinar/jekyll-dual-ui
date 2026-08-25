@@ -22,8 +22,11 @@
   </ion-tab>
 
 <script>
-fetch('/assets/json/posts.json')
-  .then(res => res.json())
+fetch('{{ "/assets/json/posts.json" | relative_url }}')
+  .then(res => {
+    if (!res.ok) throw new Error('Failed to load posts');
+    return res.json();
+  })
   .then(data => {
     renderIonCards(data.posts);
     // Sembunyikan spinner & tampilkan container setelah render

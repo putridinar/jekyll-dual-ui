@@ -3,9 +3,8 @@
 port: 8800
 title: Awesome Site
 description: Jekyll Dual-UI @ionic/core@8 x Bootstrap@5.3 Boilerplate.
-baseurl: "/jekyll-dual-ui" 
-localurl: "<%= ENV['LOCAL_URL'] %>"
-url: "http://localhost:8800" 
+baseurl: "/jekyll-dual-ui"
+url: ""
 
 # Markdown settings
 markdown: kramdown
@@ -31,7 +30,7 @@ plugins:
 
 plugins_dir: _plugins
 
-# Firebase
+# Firebase - Load from environment variables
 api_key: "<%= ENV['api_key'] %>"
 auth_domain: "<%= ENV['auth_domain'] %>"
 project_id: "<%= ENV['project_id'] %>"
